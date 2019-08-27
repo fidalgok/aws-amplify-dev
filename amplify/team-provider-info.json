@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "todo-aws-tutorial-dev-20190827144046-authRole",
+            "UnauthRoleArn": "arn:aws:iam::866317749350:role/todo-aws-tutorial-dev-20190827144046-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::866317749350:role/todo-aws-tutorial-dev-20190827144046-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "todo-aws-tutorial-dev-20190827144046-deployment",
+            "UnauthRoleName": "todo-aws-tutorial-dev-20190827144046-unauthRole",
+            "StackName": "todo-aws-tutorial-dev-20190827144046",
+            "StackId": "arn:aws:cloudformation:us-east-1:866317749350:stack/todo-aws-tutorial-dev-20190827144046/2eb87310-c8fa-11e9-aa22-0a16600979f0"
+        },
+        "categories": {
+            "auth": {
+                "todoawstutorial79963a80": {}
+            }
+        }
+    }
+}

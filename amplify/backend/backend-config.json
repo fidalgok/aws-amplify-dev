@@ -1,0 +1,9 @@
+{
+	"auth": {
+		"todoawstutorial79963a80": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	}
+}

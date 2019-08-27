@@ -1,7 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import Amplify from 'aws-amplify';
 import Form from './components/Form';
 import Notes from './components/Notes';
+import aws_exports from './aws-exports'; // your aws configuration information
+
+// initialize the app with your aws backend
+Amplify.configure(aws_exports);
 
 const AppContainer = styled.div`
   max-width: 960px;
