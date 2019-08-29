@@ -4,6 +4,7 @@ import AppContainer from '../layout/AppContainer';
 import Form from './Form'
 import Notes from './Notes'
 import { UserContext } from '../App';
+import { Auth } from 'aws-amplify';
 
 
 const FilterMenu = styled.div`
@@ -22,6 +23,14 @@ const FilterMenu = styled.div`
   button:hover {
     cursor: pointer;
   }
+`;
+
+const Header = styled.header`
+  text-align: center;
+`;
+
+const SignOut = styled.button`
+  color: #777;
 `;
 
 
@@ -44,7 +53,10 @@ const LoggedIn = (props) => {
 
   return (
     <AppContainer>
-      <h1 style={{ textAlign: 'center' }}>Notes for {user.username}</h1>
+      <Header>
+        <h1 style={{ textAlign: 'center' }}>Notes for {user.username}</h1>
+        <SignOut onClick={() => Auth.signOut().then(() => window.location.reload())}>Signout</SignOut>
+      </Header>
       <Form setNotes={setNotes} />
       <Notes
         notes={filteredNotes}

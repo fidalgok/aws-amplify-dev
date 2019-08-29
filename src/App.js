@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { withAuthenticator } from 'aws-amplify-react';
-
 import LoggedOut from './components/LoggedOut';
 import LoggedIn from './components/LoggedIn';
 
@@ -12,6 +10,7 @@ export const UserContext = React.createContext();
 function App(props) {
   const { state } = useAmplifyAuth();
   console.log({ amplifyAuthState: state })
+  if (state.isLoading) return null;
   return !state.user ? (
     <LoggedOut />
   ) : (
