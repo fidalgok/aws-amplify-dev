@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { API, graphqlOperation } from 'aws-amplify';
+import { createTodo } from '../graphql/mutations';
 
 const Input = styled.input`
   height: 3.5rem;
@@ -24,7 +26,7 @@ const ErrorMessage = styled.p`
   color: hsl(345, 85%, 25%);
 `;
 
-const Form = ({ createNote }) => {
+const Form = ({ setNotes }) => {
   const [value, setValue] = React.useState('');
   const [error, setError] = React.useState(null);
   const handleChange = (e) => setValue(e.target.value);
@@ -32,9 +34,23 @@ const Form = ({ createNote }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (value.length > 1) {
-      createNote({ name: value, status: 'new' });
-      setError(null);
-      setValue('');
+      API.graphql(graphqlOperation(createTodo, {
+        input: {
+          name: value,
+          status: 'new'
+        }
+      })).then(result => {
+        console.log(result);
+        setError(null);
+        setValue('');
+        setNotes(prevState => {
+          return [result.data.createTodo, ...prevState]
+        })
+      }).catch(err => {
+        console.log('error: ', err)
+        setError(err);
+      })
+
     } else {
       setError('Please enter a note');
     }

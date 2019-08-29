@@ -1,0 +1,20 @@
+type Todo
+  @model(subscriptions: null)
+  @auth(rules: [
+    {allow: owner},
+    {allow: groups, groups: ["Admin"]}
+  ])
+
+{
+  id: ID!
+  name: String!
+  description: String
+  status: Status!
+  createdAt: String
+  updatedAt: String
+}
+
+enum Status {
+  new
+  completed
+}

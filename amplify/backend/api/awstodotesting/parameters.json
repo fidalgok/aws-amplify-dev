@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "awstodotesting",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authtodoawstutorial79963a80",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

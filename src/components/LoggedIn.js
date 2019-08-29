@@ -30,27 +30,6 @@ const LoggedIn = (props) => {
   const [filter, setFilter] = React.useState('none');
   const user = React.useContext(UserContext);
 
-  const createNote = async note => {
-    const updatedNotes = [note, ...notes];
-    setNotes(updatedNotes);
-  }
-
-  const updateNote = async note => {
-    const updatedNote = {
-      ...note,
-      status: note.status === 'new' ? 'completed' : 'new'
-    }
-    const index = notes.findIndex(i => i.id === note.id);
-    const updatedNotes = [...notes];
-    updatedNotes[index] = updatedNote;
-    setNotes(updatedNotes);
-  }
-
-  const deleteNote = async note => {
-    const input = { id: note.id }
-    const updatedNotes = notes.filter(n => n.id !== note.id);
-    setNotes(updatedNotes);
-  }
 
   const updateFilter = filter => setFilter(filter);
   let filteredNotes;
@@ -65,12 +44,11 @@ const LoggedIn = (props) => {
 
   return (
     <AppContainer>
-      <h1>Notes for {user.username}</h1>
-      <Form createNote={createNote} />
+      <h1 style={{ textAlign: 'center' }}>Notes for {user.username}</h1>
+      <Form setNotes={setNotes} />
       <Notes
         notes={filteredNotes}
-        deleteNote={deleteNote}
-        updateNote={updateNote}
+        setNotes={setNotes}
       />
       <FilterMenu>
         <button onClick={() => updateFilter('none')}>All</button>
