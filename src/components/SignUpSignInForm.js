@@ -6,6 +6,168 @@ const initialFormState = {
   username: '', password: '', email: '', confirmationCode: ''
 }
 
+const FormContainer = styled.div`
+  margin: 3.2rem auto 0;
+`;
+
+const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+`;
+
+const Input = styled.input`
+  font-size: inherit;
+  padding: 1.6rem 4px;
+  margin-bottom: 2.4rem;
+  color: inherit;
+  border: none;
+  border-bottom: 2px solid hsl(205, 85%, 95%);
+  width: 300px;
+
+  &:focus {
+    outline: none;
+    border-color: hsl(205, 85%, 45%);
+  }
+`;
+
+const Button = styled.button`
+  display: inline-block;
+  width: 300px;
+`;
+
+
+
+export default function Form() {
+  const [formType, updateFormType] = useState('signIn')
+  const [formState, updateFormState] = useReducer(reducer, initialFormState)
+
+  function renderForm() {
+    switch (formType) {
+      case 'signUp':
+        return (
+          <SignUp
+            signUp={() => signUp(formState, updateFormType)}
+            updateFormState={e => updateFormState({ type: 'updateFormState', e })}
+          />
+        )
+      case 'confirmSignUp':
+        return (
+          <ConfirmSignUp
+            confirmSignUp={() => confirmSignUp(formState, updateFormType)}
+            updateFormState={e => updateFormState({ type: 'updateFormState', e })}
+          />
+        )
+      case 'signIn':
+        return (
+          <SignIn
+            signIn={() => signIn(formState)}
+            updateFormState={e => updateFormState({ type: 'updateFormState', e })}
+          />
+        )
+      default:
+        return null
+    }
+  }
+
+
+  return (
+    <FormContainer>
+      <FormWrapper>
+        {renderForm(formState)}
+      </FormWrapper>
+      {
+        formType === 'signUp' && (
+          <p style={{ textAlign: 'center' }}>
+            Already have an account? <span
+              onClick={() => updateFormType('signIn')}
+            >Sign In</span>
+          </p>
+        )
+      }
+      {
+        formType === 'signIn' && (
+          <p style={{ textAlign: 'center' }}>
+            Need an account? <span
+
+              onClick={() => updateFormType('signUp')}
+            >Sign Up</span>
+          </p>
+        )
+      }
+    </FormContainer>
+  )
+}
+
+function SignUp(props) {
+  return (
+    <>
+      <Input
+        name='username'
+        onChange={e => { e.persist(); props.updateFormState(e) }}
+        placeholder='username'
+      />
+      <Input
+        type='password'
+        name='password'
+        onChange={e => { e.persist(); props.updateFormState(e) }}
+
+        placeholder='password'
+      />
+      <Input
+        name='email'
+        onChange={e => { e.persist(); props.updateFormState(e) }}
+
+        placeholder='email'
+      />
+      <Button onClick={props.signUp} className="primary">
+        Sign Up
+      </Button>
+    </>
+  )
+}
+
+function SignIn(props) {
+  return (
+    <>
+      <Input
+        name='username'
+        onChange={e => { e.persist(); props.updateFormState(e) }}
+
+        placeholder='username'
+      />
+      <Input
+        type='password'
+        name='password'
+        onChange={e => { e.persist(); props.updateFormState(e) }}
+
+        placeholder='password'
+      />
+      <Button onClick={props.signIn} className="primary">
+        Sign In
+      </Button>
+    </>
+  )
+}
+
+function ConfirmSignUp(props) {
+  return (
+    <>
+      <Input
+        name='confirmationCode'
+        placeholder='Confirmation Code'
+        onChange={e => { e.persist(); props.updateFormState(e) }}
+
+      />
+      <Button onClick={props.confirmSignUp} className="primary">
+        Confirm Sign Up
+      </Button>
+    </>
+  )
+}
+
 function reducer(state, action) {
   switch (action.type) {
     case 'updateFormState':
@@ -46,133 +208,5 @@ async function signIn({ username, password }) {
   } catch (err) {
     console.log('error signing up..', err)
   }
-}
-
-export default function Form() {
-  const [formType, updateFormType] = useState('signUp')
-  const [formState, updateFormState] = useReducer(reducer, initialFormState)
-
-  function renderForm() {
-    switch (formType) {
-      case 'signUp':
-        return (
-          <SignUp
-            signUp={() => signUp(formState, updateFormType)}
-            updateFormState={e => updateFormState({ type: 'updateFormState', e })}
-          />
-        )
-      case 'confirmSignUp':
-        return (
-          <ConfirmSignUp
-            confirmSignUp={() => confirmSignUp(formState, updateFormType)}
-            updateFormState={e => updateFormState({ type: 'updateFormState', e })}
-          />
-        )
-      case 'signIn':
-        return (
-          <SignIn
-            signIn={() => signIn(formState)}
-            updateFormState={e => updateFormState({ type: 'updateFormState', e })}
-          />
-        )
-      default:
-        return null
-    }
-  }
-
-
-  return (
-    <div>
-      <div>
-        {renderForm(formState)}
-      </div>
-      {
-        formType === 'signUp' && (
-          <p >
-            Already have an account? <span
-              onClick={() => updateFormType('signIn')}
-            >Sign In</span>
-          </p>
-        )
-      }
-      {
-        formType === 'signIn' && (
-          <p >
-            Need an account? <span
-
-              onClick={() => updateFormType('signUp')}
-            >Sign Up</span>
-          </p>
-        )
-      }
-    </div>
-  )
-}
-
-function SignUp(props) {
-  return (
-    <div >
-      <input
-        name='username'
-        onChange={e => { e.persist(); props.updateFormState(e) }}
-        placeholder='username'
-      />
-      <input
-        type='password'
-        name='password'
-        onChange={e => { e.persist(); props.updateFormState(e) }}
-
-        placeholder='password'
-      />
-      <input
-        name='email'
-        onChange={e => { e.persist(); props.updateFormState(e) }}
-
-        placeholder='email'
-      />
-      <button onClick={props.signUp} >
-        Sign Up
-      </button>
-    </div>
-  )
-}
-
-function SignIn(props) {
-  return (
-    <div>
-      <input
-        name='username'
-        onChange={e => { e.persist(); props.updateFormState(e) }}
-
-        placeholder='username'
-      />
-      <input
-        type='password'
-        name='password'
-        onChange={e => { e.persist(); props.updateFormState(e) }}
-
-        placeholder='password'
-      />
-      <button onClick={props.signIn}>
-        Sign In
-      </button>
-    </div>
-  )
-}
-
-function ConfirmSignUp(props) {
-  return (
-    <div >
-      <input
-        name='confirmationCode'
-        placeholder='Confirmation Code'
-        onChange={e => { e.persist(); props.updateFormState(e) }}
-
-      />
-      <button onClick={props.confirmSignUp} >
-        Confirm Sign Up
-      </button>
-    </div>
-  )
 }
 

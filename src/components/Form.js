@@ -11,12 +11,14 @@ const Input = styled.input`
   margin-left: 10px;
   font-size: 2rem;
   padding: .8rem;
+  border-bottom: 1px solid rgba(0, 0, 0, .15);
 `;
 
 const StyledForm = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 4.8rem 0;
 `;
 
 const ErrorMessage = styled.p`

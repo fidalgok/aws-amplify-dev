@@ -26,7 +26,9 @@ const FilterMenu = styled.div`
 `;
 
 const Header = styled.header`
-  text-align: center;
+
+  display: flex;
+  justify-content: space-between;
 `;
 
 const SignOut = styled.button`
@@ -58,15 +60,15 @@ const LoggedIn = (props) => {
         <SignOut onClick={() => Auth.signOut().then(() => window.location.reload())}>Signout</SignOut>
       </Header>
       <Form setNotes={setNotes} />
-      <Notes
-        notes={filteredNotes}
-        setNotes={setNotes}
-      />
       <FilterMenu>
         <button onClick={() => updateFilter('none')}>All</button>
         <button onClick={() => updateFilter('completed')}>Completed</button>
         <button onClick={() => updateFilter('new')}>Pending</button>
       </FilterMenu>
+      <Notes
+        notes={filteredNotes}
+        setNotes={setNotes}
+      />
     </AppContainer>
   );
 }

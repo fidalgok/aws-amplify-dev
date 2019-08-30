@@ -33,3 +33,21 @@ h1, h2, h3, h4 {
 button:hover{
   cursor: pointer;
 }
+
+button {
+  border: none;
+  background: none;
+  font-size: inherit;
+  color: inherit;
+  border-radius: 4px;
+  padding: 1.6rem .8rem;
+}
+
+button.primary {
+  color: hsl(175, 90%, 95%);
+  background: hsl(205, 90%, 50%);
+}
+
+button.secondary {
+  border: 1px solid hsl(205, 90%, 50%);
+}
